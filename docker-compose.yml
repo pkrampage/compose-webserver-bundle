@@ -1,0 +1,43 @@
+services:
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    environment:
+      DB_MYSQL_HOST: db
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: ${NPM_DB_USER}
+      DB_MYSQL_PASSWORD: ${NPM_DB_PASSWORD}
+      DB_MYSQL_NAME: ${NPM_DB_NAME}
+    volumes:
+      - data/nginx-proxy-manager:/data
+      - letsencrypt:/etc/letsencrypt
+
+  # portainer config from https://earthly.dev/blog/portainer-for-docker-container-management/
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9000:9000
+      - 9443:9443
+    volumes:
+      - data:/data
+      - /var/run/docker.sock:/var/run/docker.
+    restart: unless-stopped
+
+  # filebrowser config from https://hub.docker.com/r/hurlenko/filebrowser
+  filebrowser:
+    image: hurlenko/filebrowser
+    user: "${UID}:${GID}"
+    ports:
+     - '8080:8080'
+    volumes:
+    #edit directory for these file
+      - /DATA_DIR:/data
+      - /CONFIG_DIR:/config
+    environment:
+      - FB_BASEURL=/filebrowser
+    restart: unless-stopped
