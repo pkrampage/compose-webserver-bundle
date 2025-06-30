@@ -47,6 +47,9 @@ A Docker Compose configuration that sets up a lightweight and powerful webserver
 6. An 'admin' password is automatically generated. To find it, use this method:
    ```bash
    docker logs filebrowser-container-name
+   ```
+   
+   ```bash
    2025/06/30 03:01:18 Warning: filebrowser.db can't be found. Initialing in /config/
    2025/06/30 03:01:18 Using database: /config/filebrowser.db
    2025/06/30 03:01:19 No config file used
