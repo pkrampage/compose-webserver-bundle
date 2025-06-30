@@ -7,26 +7,18 @@ services:
       - '80:80'
       - '81:81'
       - '443:443'
-    env_file:
-      - .env
-    environment:
-      DB_MYSQL_HOST: db
-      DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: ${NPM_DB_USER}
-      DB_MYSQL_PASSWORD: ${NPM_DB_PASSWORD}
-      DB_MYSQL_NAME: ${NPM_DB_NAME}
     volumes:
-      - data/nginx-proxy-manager:/data
+      - nginx_proxy_manager_data:/data
       - letsencrypt:/etc/letsencrypt
 
   # portainer config from https://earthly.dev/blog/portainer-for-docker-container-management/
   portainer:
     image: portainer/portainer-ce:latest
     ports:
-      - 9000:9000
-      - 9443:9443
+      - '9000:9000'
+      - '9443:9443'
     volumes:
-      - data:/data
+      - portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
@@ -39,9 +31,15 @@ services:
     volumes:
     #edit directory for these file
       - /DATA_DIR:/data
-      - /CONFIG_DIR:/config
+      - /CONFIG_DIR:/config 
+    #in my usage, I'm mapping /home/user to /data and ./config to /config
     env_file:
       - .env
     environment:
       - FB_BASEURL=/filebrowser
     restart: unless-stopped
+
+volumes:
+  nginx_proxy_manager_data:
+  letsencrypt:
+  portainer_data:
