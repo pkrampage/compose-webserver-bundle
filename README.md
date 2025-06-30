@@ -28,11 +28,31 @@ A Docker Compose configuration that sets up a lightweight and powerful webserver
    git clone https://github.com/yourusername/compose-webserver-bundle.git
    cd compose-webserver-bundle
 
-2. Create required volumes and start the containers:
-   ```bash
-     docker-compose up -d
+2. Create .env file:
 
-3. Access services:
+   ```bash
+   NPM_DB_USER = db_username
+   NPM_DB_PASSWORD = db_password
+   NPM_DB_NAME = db_name
+
+4. Echo uid and gid to .env file:
+   ```bash
+   echo "UID=$(id -u)" >> .env
+   echo "GID=$(id -g)" >> .env
+
+5. Create required volumes and start the containers:
+   ```bash
+   docker-compose up -d
+
+6. An 'admin' password is automatically generated. To find it, use this method:
+   ```bash
+   docker logs filebrowser-container-name
+   2025/06/30 03:01:18 Warning: filebrowser.db can't be found. Initialing in /config/
+   2025/06/30 03:01:18 Using database: /config/filebrowser.db
+   2025/06/30 03:01:19 No config file used
+   2025/06/30 03:01:19 Randomly generated password for user 'admin': generated-password
+
+7. Access services:
 - Nginx Proxy Manager: http://localhost:81
 - Portainer: http://localhost:9000
 - Filebrowser: http://localhost:8080
