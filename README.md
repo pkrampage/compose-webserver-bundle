@@ -48,7 +48,7 @@ A Docker Compose configuration that sets up a lightweight and powerful webserver
    ```bash
    docker logs filebrowser-container-name
    ```
-   
+   The password will be displayed in the logs like this.
    ```bash
    2025/06/30 03:01:18 Warning: filebrowser.db can't be found. Initialing in /config/
    2025/06/30 03:01:18 Using database: /config/filebrowser.db
